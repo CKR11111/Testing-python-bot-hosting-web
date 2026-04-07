@@ -1,1 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>CKRPRO CLOUD V6</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+    :root { --bg: #000; --panel: rgba(25, 25, 27, 0.85); --accent: #007AFF; --safe: #32D74B; --kill: #FF453A; }
+    
+    body {
+      margin: 0; padding: 0; background: var(--bg) radial-gradient(circle at 50% -20%, #1c1c1e, #000);
+      color: #fff; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased;
+      display: flex; justify-content: center; min-height: 100vh;
+    }
 
+    .vps-container { width: 100%; max-width: 350px; padding: 20px 15px; }
+
+    /* Unified Glass Box */
+    .glass {
+      background: var(--panel); backdrop-filter: blur(30px) saturate(180%);
+      -webkit-backdrop-filter: blur(30px) saturate(180%);
+      border-radius: 30px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.5); border: none;
+    }
+
+    .brand-area { padding: 25px 20px 15px; text-align: center; }
+    .brand-area h1 { font-size: 19px; font-weight: 800; margin: 0; letter-spacing: -0.8px; }
+    .live-status { font-size: 10px; font-weight: 800; color: var(--safe); margin-top: 8px; letter-spacing: 1px; }
+
+    .content-box { padding: 10px 20px 25px; }
+    .heading { font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.4); text-transform: uppercase; margin-bottom: 15px; display: flex; align-items: center; gap: 6px; }
+
+    /* Custom Icon Upload Button */
+    .file-upload-wrapper { position: relative; margin-bottom: 12px; }
+    .file-upload-wrapper input[type="file"] { position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2; }
+    .custom-file-btn {
+      background: rgba(255,255,255,0.06); padding: 14px; border-radius: 15px;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      color: rgba(255,255,255,0.6); font-size: 14px; font-weight: 600; transition: 0.2s;
+    }
+
+    input[type="password"] {
+      width: 100%; background: rgba(255,255,255,0.06); border: none;
+      border-radius: 15px; padding: 14px; color: #fff; font-size: 14px;
+      margin-bottom: 12px; box-sizing: border-box; outline: none; font-weight: 600;
+    }
+
+    .auto-boot { display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); margin: 5px 0 15px; }
+
+    .btn-deploy {
+      width: 100%; padding: 15px; border-radius: 15px; border: none;
+      background: var(--accent); color: #fff; font-size: 14px; font-weight: 800;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+
+    .inst-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; }
+    .inst-name { font-weight: 700; font-size: 14px; display: block; }
+    .inst-state { font-size: 10px; font-weight: 800; color: rgba(255,255,255,0.3); }
+
+    .actions { display: flex; gap: 6px; }
+    .act-btn { padding: 8px 12px; border-radius: 10px; font-size: 10px; font-weight: 800; text-decoration: none; display: flex; align-items: center; gap: 4px; }
+    .boot { background: rgba(50, 215, 75, 0.15); color: var(--safe); }
+    .kill { background: rgba(255, 69, 58, 0.15); color: var(--kill); }
+
+    /* Lock Screen */
+    #lock-screen { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; align-items: center; justify-content: center; }
+    .lock-content { width: 280px; text-align: center; }
+  </style>
+</head>
+<body>
+
+<div id="lock-screen">
+  <div class="lock-content">
+    <div style="font-size: 45px; margin-bottom: 15px; color: var(--accent);"><i class="fa-solid fa-shield-halved"></i></div>
+    <h2 style="font-weight: 800; font-size: 18px; margin-bottom: 25px;">CKR UNKNOWN</h2>
+    <input type="password" id="key" placeholder="••••••••" style="text-align: center; background: rgba(255,255,255,0.1);">
+    <button class="btn-deploy" onclick="unlock()"><i class="fa-solid fa-key"></i> CONNECT</button>
+  </div>
+</div>
+
+<div class="vps-container">
+  <div class="glass">
+    <div class="brand-area">
+      <h1>CKRPRO CLOUD V6</h1>
+      <div class="live-status"><i class="fa-solid fa-circle"></i> SYSTEM ACTIVE</div>
+    </div>
+
+    <div class="content-box">
+      <div class="heading"><i class="fa-solid fa-cloud-arrow-up"></i> Deployment</div>
+      <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="password" name="botpw" placeholder="INSTANCE PASSWORD" required>
+        
+        <div class="file-upload-wrapper">
+          <input type="file" name="zipfile" accept=".zip" required onchange="updateFileName(this)">
+          <div class="custom-file-btn" id="file-label">
+            <i class="fa-solid fa-file-zipper"></i> Choose ZIP
+          </div>
+        </div>
+
+        <div class="auto-boot">
+          <input type="checkbox" name="autostart" value="1" id="a" checked>
+          <label for="a">Auto-boot instance</label>
+        </div>
+        <button type="submit" class="btn-deploy"><i class="fa-solid fa-rocket"></i> DEPLOY</button>
+      </form>
+    </div>
+
+    <div class="content-box" style="padding-top: 0;">
+      <div class="heading"><i class="fa-solid fa-server"></i> Instances</div>
+      <div id="list" class="inst-list">
+        <div style="padding:10px; opacity:0.2; font-size:11px; font-weight:800;">SYNCING...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function unlock() {
+    if(document.getElementById('key').value === 'ckr') {
+      document.getElementById('lock-screen').style.display = 'none';
+    } else { alert('DENIED'); }
+  }
+
+  function updateFileName(input) {
+    const label = document.getElementById('file-label');
+    if (input.files.length > 0) {
+      label.innerHTML = `<i class="fa-solid fa-check-circle"></i> ${input.files[0].name.substring(0, 15)}...`;
+      label.style.color = 'var(--safe)';
+    }
+  }
+
+  async function sync() {
+    try {
+      const r = await fetch('/api/status');
+      const data = await r.json();
+      const div = document.getElementById('list');
+      div.innerHTML = data.length ? '' : '<div style="opacity:0.3; font-size:11px; font-weight:800; padding:10px 0;">NO INSTANCES</div>';
+      data.forEach(b => {
+        div.innerHTML += `
+          <div class="inst-item">
+            <div>
+              <span class="inst-name">${b.name}</span>
+              <span class="inst-state">${b.running ? '● Running' : '○ Offline'}</span>
+            </div>
+            <div class="actions">
+              <a href="/start/${b.id}" class="act-btn boot"><i class="fa-solid fa-play"></i> BOOT</a>
+              <a href="/stop/${b.id}" class="act-btn kill"><i class="fa-solid fa-power-off"></i> KILL</a>
+              <a href="/delete/${b.id}" style="color:rgba(255,255,255,0.1); margin-left:5px;"><i class="fa-solid fa-trash-can"></i></a>
+            </div>
+          </div>`;
+      });
+    } catch(e) {}
+  }
+  setInterval(sync, 5000); sync();
+</script>
+</body>
+</html>
