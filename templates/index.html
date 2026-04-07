@@ -2,84 +2,117 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>CKRPRO CLOUD V6</title>
+  <title>CKR UNKNOWN HUB</title>
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
-    :root { --bg: #000; --panel: rgba(25, 25, 27, 0.85); --accent: #007AFF; --safe: #32D74B; --kill: #FF453A; }
-    body { margin: 0; padding: 0; background: var(--bg) radial-gradient(circle at 50% -20%, #1c1c1e, #000); color: #fff; font-family: 'Inter', sans-serif; display: flex; justify-content: center; min-height: 100vh; -webkit-font-smoothing: antialiased; }
-    .vps-container { width: 100%; max-width: 350px; padding: 20px 15px; }
-    .glass { background: var(--panel); backdrop-filter: blur(30px) saturate(180%); -webkit-backdrop-filter: blur(30px) saturate(180%); border-radius: 30px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.5); border: none; }
-    .brand-area { padding: 25px 20px 15px; text-align: center; }
-    .brand-area h1 { font-size: 19px; font-weight: 800; margin: 0; letter-spacing: -0.8px; }
-    .live-status { font-size: 10px; font-weight: 800; color: var(--safe); margin-top: 8px; letter-spacing: 1px; }
-    .content-box { padding: 10px 20px 25px; }
-    .heading { font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.4); text-transform: uppercase; margin-bottom: 15px; display: flex; align-items: center; gap: 6px; }
-    .file-upload-wrapper { position: relative; margin-bottom: 12px; }
-    .file-upload-wrapper input[type="file"] { position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2; }
-    .custom-file-btn { background: rgba(255,255,255,0.06); padding: 14px; border-radius: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; color: rgba(255,255,255,0.6); font-size: 14px; font-weight: 600; }
-    input[type="password"] { width: 100%; background: rgba(255,255,255,0.06); border: none; border-radius: 15px; padding: 14px; color: #fff; font-size: 14px; margin-bottom: 12px; box-sizing: border-box; outline: none; font-weight: 600; }
-    .auto-boot { display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); margin: 5px 0 15px; }
-    .btn-deploy { width: 100%; padding: 15px; border-radius: 15px; border: none; background: var(--accent); color: #fff; font-size: 14px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
-    .inst-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; }
-    .inst-name { font-weight: 700; font-size: 14px; }
-    .inst-state { font-size: 10px; font-weight: 800; color: rgba(255,255,255,0.3); }
-    .actions { display: flex; gap: 6px; }
-    .act-btn { padding: 8px 12px; border-radius: 10px; font-size: 10px; font-weight: 800; text-decoration: none; display: flex; align-items: center; gap: 4px; }
+    :root { --bg: #050505; --panel: rgba(20, 20, 22, 0.9); --accent: #007AFF; --safe: #32D74B; --kill: #FF453A; }
+    body { margin: 0; background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; display: flex; justify-content: center; min-height: 100vh; overflow-x: hidden; }
+    .vps-container { width: 100%; max-width: 360px; padding: 25px 15px; }
+    .glass { background: var(--panel); backdrop-filter: blur(40px); border-radius: 35px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 40px 80px rgba(0,0,0,0.8); overflow: hidden; }
+    .brand-area { padding: 35px 20px 15px; text-align: center; }
+    .brand-area h1 { font-size: 20px; font-weight: 800; letter-spacing: -1px; margin: 0; background: linear-gradient(to bottom, #fff, #888); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .live-status { font-size: 10px; font-weight: 800; color: var(--safe); margin-top: 10px; letter-spacing: 1px; display: flex; align-items: center; justify-content: center; gap: 5px; }
+    .content-box { padding: 20px 25px 25px; }
+    .heading { font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.3); text-transform: uppercase; margin-bottom: 20px; letter-spacing: 1px; }
+    .file-input-card { position: relative; background: rgba(255,255,255,0.04); padding: 20px; border-radius: 20px; text-align: center; margin-bottom: 15px; border: 1px dashed rgba(255,255,255,0.1); }
+    .file-input-card input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .btn-main { width: 100%; padding: 16px; border-radius: 18px; border: none; background: var(--accent); color: #fff; font-size: 14px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+    .btn-main:active { transform: scale(0.96); opacity: 0.8; }
+    .bot-item { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .bot-name { font-weight: 700; font-size: 15px; display: block; margin-bottom: 3px; }
+    .bot-status { font-size: 10px; font-weight: 800; }
+    .actions { display: flex; gap: 8px; align-items: center; }
+    .act-btn { padding: 10px 16px; border-radius: 12px; font-size: 10px; font-weight: 800; text-decoration: none; color: #fff; transition: 0.2s; }
     .boot { background: rgba(50, 215, 75, 0.15); color: var(--safe); }
     .kill { background: rgba(255, 69, 58, 0.15); color: var(--kill); }
     #lock-screen { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; align-items: center; justify-content: center; }
+    input[type="password"] { width: 100%; background: rgba(255,255,255,0.08); border: none; border-radius: 15px; padding: 16px; color: #fff; font-size: 15px; text-align: center; outline: none; font-weight: 600; }
   </style>
 </head>
 <body>
+
 <div id="lock-screen">
   <div style="width: 280px; text-align: center;">
-    <div style="font-size: 45px; margin-bottom: 15px; color: var(--accent);"><i class="fa-solid fa-shield-halved"></i></div>
-    <h2 style="font-weight: 800; font-size: 18px; margin-bottom: 25px;">CKR UNKNOWN</h2>
-    <input type="password" id="key" placeholder="••••••••" style="text-align: center; background: rgba(255,255,255,0.1);">
-    <button class="btn-deploy" onclick="unlock()"><i class="fa-solid fa-key"></i> CONNECT</button>
+    <div style="font-size: 55px; color: var(--accent); margin-bottom: 25px;"><i class="fa-solid fa-fingerprint"></i></div>
+    <h2 style="font-weight: 800; font-size: 19px; margin-bottom: 30px;">CKR UNKNOWN</h2>
+    <input type="password" id="key" placeholder="SECRET KEY" onkeypress="if(event.key==='Enter') unlock()">
+    <button class="btn-main" style="margin-top: 15px;" onclick="unlock()">UNLOCK PANEL</button>
   </div>
 </div>
+
 <div class="vps-container">
   <div class="glass">
     <div class="brand-area">
       <h1>CKRPRO CLOUD V6</h1>
-      <div class="live-status"><i class="fa-solid fa-circle"></i> SYSTEM ACTIVE</div>
+      <div class="live-status"><i class="fa-solid fa-circle" style="font-size: 8px;"></i> SYSTEM ONLINE</div>
     </div>
+
     <div class="content-box">
-      <div class="heading"><i class="fa-solid fa-cloud-arrow-up"></i> Deployment</div>
+      <div class="heading">Deployment</div>
       <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="password" name="botpw" placeholder="INSTANCE PASSWORD" required>
-        <div class="file-upload-wrapper">
-          <input type="file" name="zipfile" accept=".zip" required onchange="updateName(this)">
-          <div class="custom-file-btn" id="f-label"><i class="fa-solid fa-file-zipper"></i> Choose ZIP</div>
+        <div class="file-input-card">
+          <input type="file" name="zipfile" accept=".zip" required onchange="u(this)">
+          <div id="f-label">
+            <i class="fa-solid fa-file-zipper" style="font-size: 24px; margin-bottom: 10px; opacity: 0.5;"></i><br>
+            <span style="font-size:12px; font-weight:600; opacity: 0.6;">Tap to Choose ZIP</span>
+          </div>
         </div>
-        <div class="auto-boot"><input type="checkbox" name="autostart" value="1" id="a" checked><label for="a">Auto-boot instance</label></div>
-        <button type="submit" class="btn-deploy"><i class="fa-solid fa-rocket"></i> DEPLOY</button>
+        <button type="submit" class="btn-main"><i class="fa-solid fa-bolt"></i> DEPLOY INSTANCE</button>
       </form>
     </div>
+
     <div class="content-box" style="padding-top: 0;">
-      <div class="heading"><i class="fa-solid fa-server"></i> Instances</div>
-      <div id="list" class="inst-list">
-        <div style="padding:10px; opacity:0.2; font-size:11px; font-weight:800;">SYNCING...</div>
-      </div>
+      <div class="heading">Instances</div>
+      <div id="list"></div>
     </div>
   </div>
 </div>
+
 <script>
-  function unlock() { if(document.getElementById('key').value === 'ckr') document.getElementById('lock-screen').style.display='none'; else alert('DENIED'); }
-  function updateName(i) { if(i.files[0]) document.getElementById('f-label').innerHTML = `<i class="fa-solid fa-check-circle"></i> ${i.files[0].name.substring(0,12)}...`; }
+  function unlock() {
+    if(document.getElementById('key').value === 'ckr') {
+      localStorage.setItem('v6_session', 'active');
+      document.getElementById('lock-screen').style.display='none';
+    } else { alert('DENIED'); }
+  }
+
+  if(localStorage.getItem('v6_session') === 'active') {
+    document.getElementById('lock-screen').style.display='none';
+  }
+
+  function u(i) { if(i.files[0]) document.getElementById('f-label').innerHTML = `<i class="fa-solid fa-circle-check" style="color:var(--safe)"></i><br>${i.files[0].name.substring(0,18)}`; }
+
   async function sync() {
     try {
-      const r = await fetch('/api/status'); const data = await r.json();
+      const r = await fetch('/api/status');
+      const data = await r.json();
       const div = document.getElementById('list');
-      div.innerHTML = data.length ? '' : '<div style="opacity:0.3; font-size:11px; font-weight:800; padding:10px 0;">NO INSTANCES</div>';
+      div.innerHTML = data.length ? '' : '<div style="opacity:0.2; font-weight:800; font-size:11px; text-align:center;">EMPTY CLOUD STORAGE</div>';
       data.forEach(b => {
-        div.innerHTML += `<div class="inst-item"><div><span class="inst-name">${b.name}</span><span class="inst-state">${b.running ? '● Running' : '○ Offline'}</span></div><div class="actions"><a href="/start/${b.id}" class="act-btn boot"><i class="fa-solid fa-play"></i> BOOT</a><a href="/stop/${b.id}" class="act-btn kill"><i class="fa-solid fa-power-off"></i> KILL</a><a href="/delete/${b.id}" style="color:rgba(255,255,255,0.1); margin-left:5px;"><i class="fa-solid fa-trash-can"></i></a></div></div>`;
+        div.innerHTML += `
+          <div class="bot-item">
+            <div>
+              <span class="bot-name">${b.name}</span>
+              <span class="bot-status" style="color:${b.running ? '#32D74B' : 'rgba(255,255,255,0.2)'}">${b.running ? '● RUNNING' : '○ OFFLINE'}</span>
+            </div>
+            <div class="actions">
+              <a href="/start/${b.id}" class="act-btn boot">BOOT</a>
+              <a href="/stop/${b.id}" class="act-btn kill">KILL</a>
+              <i class="fa-solid fa-trash-can" onclick="confirmDel('${b.id}')" style="color:rgba(255,255,255,0.1); font-size:14px; margin-left:5px; cursor:pointer;"></i>
+            </div>
+          </div>`;
       });
     } catch(e) {}
   }
+
+  function confirmDel(id) {
+    if(prompt("Enter 'ckr' to delete:") === 'ckr') {
+      window.location.href = '/delete/' + id;
+    }
+  }
+
   setInterval(sync, 4000); sync();
 </script>
 </body>
