@@ -6,114 +6,98 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
-    :root { --bg: #050505; --panel: rgba(20, 20, 22, 0.9); --accent: #007AFF; --safe: #32D74B; --kill: #FF453A; }
-    body { margin: 0; background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; display: flex; justify-content: center; min-height: 100vh; overflow-x: hidden; }
-    .vps-container { width: 100%; max-width: 360px; padding: 25px 15px; }
-    .glass { background: var(--panel); backdrop-filter: blur(40px); border-radius: 35px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 40px 80px rgba(0,0,0,0.8); overflow: hidden; }
-    .brand-area { padding: 35px 20px 15px; text-align: center; }
-    .brand-area h1 { font-size: 20px; font-weight: 800; letter-spacing: -1px; margin: 0; background: linear-gradient(to bottom, #fff, #888); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .live-status { font-size: 10px; font-weight: 800; color: var(--safe); margin-top: 10px; letter-spacing: 1px; display: flex; align-items: center; justify-content: center; gap: 5px; }
-    .content-box { padding: 20px 25px 25px; }
-    .heading { font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.3); text-transform: uppercase; margin-bottom: 20px; letter-spacing: 1px; }
-    .file-input-card { position: relative; background: rgba(255,255,255,0.04); padding: 20px; border-radius: 20px; text-align: center; margin-bottom: 15px; border: 1px dashed rgba(255,255,255,0.1); }
-    .file-input-card input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-    .btn-main { width: 100%; padding: 16px; border-radius: 18px; border: none; background: var(--accent); color: #fff; font-size: 14px; font-weight: 800; cursor: pointer; transition: 0.3s; }
-    .btn-main:active { transform: scale(0.96); opacity: 0.8; }
-    .bot-item { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .bot-name { font-weight: 700; font-size: 15px; display: block; margin-bottom: 3px; }
-    .bot-status { font-size: 10px; font-weight: 800; }
-    .actions { display: flex; gap: 8px; align-items: center; }
-    .act-btn { padding: 10px 16px; border-radius: 12px; font-size: 10px; font-weight: 800; text-decoration: none; color: #fff; transition: 0.2s; }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+    :root { --bg: #000; --panel: rgba(28, 28, 30, 0.95); --accent: #007AFF; --safe: #32D74B; --kill: #FF453A; }
+    body { margin: 0; background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; display: flex; justify-content: center; min-height: 100vh; }
+    .vps-container { width: 100%; max-width: 360px; padding: 20px 15px; }
+    .glass { background: var(--panel); backdrop-filter: blur(50px); border-radius: 30px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 40px 80px rgba(0,0,0,0.9); overflow: hidden; }
+    .brand { padding: 30px 20px 10px; text-align: center; }
+    .brand h1 { font-size: 20px; font-weight: 900; margin: 0; letter-spacing: -1px; background: linear-gradient(#fff, #999); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .live { font-size: 10px; font-weight: 800; color: var(--safe); margin-top: 10px; text-transform: uppercase; letter-spacing: 1.5px; }
+    .box { padding: 20px 25px; }
+    .label { font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.3); text-transform: uppercase; margin-bottom: 15px; }
+    .upload-area { position: relative; background: rgba(255,255,255,0.03); padding: 25px; border-radius: 20px; text-align: center; border: 1px dashed rgba(255,255,255,0.1); margin-bottom: 15px; }
+    .upload-area input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .btn-main { width: 100%; padding: 16px; border-radius: 18px; border: none; background: var(--accent); color: #fff; font-size: 14px; font-weight: 800; cursor: pointer; }
+    .inst-card { background: rgba(255,255,255,0.03); border-radius: 20px; padding: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.02); }
+    .inst-info b { font-size: 15px; display: block; margin-bottom: 4px; }
+    .inst-info span { font-size: 10px; font-weight: 900; letter-spacing: 0.5px; }
+    .actions { display: flex; gap: 8px; }
+    .act-btn { padding: 10px 14px; border-radius: 12px; font-size: 10px; font-weight: 800; text-decoration: none; color: #fff; }
     .boot { background: rgba(50, 215, 75, 0.15); color: var(--safe); }
     .kill { background: rgba(255, 69, 58, 0.15); color: var(--kill); }
-    #lock-screen { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; align-items: center; justify-content: center; }
-    input[type="password"] { width: 100%; background: rgba(255,255,255,0.08); border: none; border-radius: 15px; padding: 16px; color: #fff; font-size: 15px; text-align: center; outline: none; font-weight: 600; }
+    #lock { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; align-items: center; justify-content: center; }
+    input[type="password"] { width: 100%; background: rgba(255,255,255,0.07); border: none; border-radius: 15px; padding: 16px; color: #fff; text-align: center; margin-bottom: 12px; font-weight: 600; outline: none; }
   </style>
 </head>
 <body>
 
-<div id="lock-screen">
+<div id="lock">
   <div style="width: 280px; text-align: center;">
-    <div style="font-size: 55px; color: var(--accent); margin-bottom: 25px;"><i class="fa-solid fa-fingerprint"></i></div>
-    <h2 style="font-weight: 800; font-size: 19px; margin-bottom: 30px;">CKR UNKNOWN</h2>
-    <input type="password" id="key" placeholder="SECRET KEY" onkeypress="if(event.key==='Enter') unlock()">
-    <button class="btn-main" style="margin-top: 15px;" onclick="unlock()">UNLOCK PANEL</button>
+    <h2 style="font-weight: 900; font-size: 20px; margin-bottom: 30px;">CKR UNKNOWN</h2>
+    <input type="password" id="pass" placeholder="SECRET KEY" onkeypress="if(event.key==='Enter') login()">
+    <button class="btn-main" onclick="login()">ENTER PANEL</button>
   </div>
 </div>
 
 <div class="vps-container">
   <div class="glass">
-    <div class="brand-area">
+    <div class="brand">
       <h1>CKRPRO CLOUD V6</h1>
-      <div class="live-status"><i class="fa-solid fa-circle" style="font-size: 8px;"></i> SYSTEM ONLINE</div>
+      <div class="live">● System Fully Active</div>
     </div>
-
-    <div class="content-box">
-      <div class="heading">Deployment</div>
+    <div class="box">
+      <div class="label">New Deployment</div>
       <form action="/upload" method="post" enctype="multipart/form-data">
-        <div class="file-input-card">
+        <div class="upload-area">
           <input type="file" name="zipfile" accept=".zip" required onchange="u(this)">
-          <div id="f-label">
-            <i class="fa-solid fa-file-zipper" style="font-size: 24px; margin-bottom: 10px; opacity: 0.5;"></i><br>
-            <span style="font-size:12px; font-weight:600; opacity: 0.6;">Tap to Choose ZIP</span>
-          </div>
+          <div id="f-name"><i class="fa-solid fa-cloud-arrow-up" style="font-size:24px; margin-bottom:10px;"></i><br>Choose ZIP</div>
         </div>
-        <button type="submit" class="btn-main"><i class="fa-solid fa-bolt"></i> DEPLOY INSTANCE</button>
+        <button type="submit" class="btn-main">DEPLOY INSTANCE</button>
       </form>
     </div>
-
-    <div class="content-box" style="padding-top: 0;">
-      <div class="heading">Instances</div>
+    <div class="box" style="padding-top:0;">
+      <div class="label">Instances</div>
       <div id="list"></div>
     </div>
   </div>
 </div>
 
 <script>
-  function unlock() {
-    if(document.getElementById('key').value === 'ckr') {
-      localStorage.setItem('v6_session', 'active');
-      document.getElementById('lock-screen').style.display='none';
-    } else { alert('DENIED'); }
+  function login() {
+    if(document.getElementById('pass').value === 'ckr') {
+      localStorage.setItem('ckr_auth_v6', 'true');
+      document.getElementById('lock').style.display='none';
+    } else { alert('Access Denied'); }
   }
+  if(localStorage.getItem('ckr_auth_v6') === 'true') document.getElementById('lock').style.display='none';
 
-  if(localStorage.getItem('v6_session') === 'active') {
-    document.getElementById('lock-screen').style.display='none';
-  }
-
-  function u(i) { if(i.files[0]) document.getElementById('f-label').innerHTML = `<i class="fa-solid fa-circle-check" style="color:var(--safe)"></i><br>${i.files[0].name.substring(0,18)}`; }
+  function u(i) { if(i.files[0]) document.getElementById('f-name').innerText = i.files[0].name; }
 
   async function sync() {
     try {
       const r = await fetch('/api/status');
       const data = await r.json();
       const div = document.getElementById('list');
-      div.innerHTML = data.length ? '' : '<div style="opacity:0.2; font-weight:800; font-size:11px; text-align:center;">EMPTY CLOUD STORAGE</div>';
+      div.innerHTML = data.length ? '' : '<div style="opacity:0.2; font-size:11px; font-weight:800; text-align:center;">EMPTY</div>';
       data.forEach(b => {
         div.innerHTML += `
-          <div class="bot-item">
-            <div>
-              <span class="bot-name">${b.name}</span>
-              <span class="bot-status" style="color:${b.running ? '#32D74B' : 'rgba(255,255,255,0.2)'}">${b.running ? '● RUNNING' : '○ OFFLINE'}</span>
+          <div class="inst-card">
+            <div class="inst-info">
+              <b>${b.name}</b>
+              <span style="color:${b.running ? '#32D74B' : 'rgba(255,255,255,0.2)'}">${b.running ? '● RUNNING' : '○ OFFLINE'}</span>
             </div>
             <div class="actions">
               <a href="/start/${b.id}" class="act-btn boot">BOOT</a>
               <a href="/stop/${b.id}" class="act-btn kill">KILL</a>
-              <i class="fa-solid fa-trash-can" onclick="confirmDel('${b.id}')" style="color:rgba(255,255,255,0.1); font-size:14px; margin-left:5px; cursor:pointer;"></i>
+              <i class="fa-solid fa-trash-can" onclick="del('${b.id}')" style="opacity:0.1; margin-left:5px; cursor:pointer;"></i>
             </div>
           </div>`;
       });
     } catch(e) {}
   }
-
-  function confirmDel(id) {
-    if(prompt("Enter 'ckr' to delete:") === 'ckr') {
-      window.location.href = '/delete/' + id;
-    }
-  }
-
-  setInterval(sync, 4000); sync();
+  function del(id) { if(confirm('Delete?')) window.location.href='/delete/'+id; }
+  setInterval(sync, 2500); sync();
 </script>
 </body>
 </html>
