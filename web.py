@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for, jsonify
-import os, subprocess, zipfile, shutil, pathlib, time, threading, json, uuid, signal
+import os, subprocess, zipfile, shutil, pathlib, time, threading, json, uuid, signal, sys
 
 app = Flask(__name__)
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -57,10 +57,14 @@ def start(bot):
     if bot not in meta: return "404", 404
     if is_running(bot): stop(bot)
     folder = os.path.join(BOT_ROOT, bot)
-    log_path = os.path.join(folder, "run.log")
-    log = open(log_path, "a")
-    # Subprocess start for Render/Cloud
-    running_processes[bot] = subprocess.Popen(["python3", "ckr.py"], cwd=folder, stdout=log, stderr=log, start_new_session=True)
+    log_file = open(os.path.join(folder, "run.log"), "a")
+    
+    # Render ma bot chalauna chahine libraries auto-install garchha
+    subprocess.run([sys.executable, "-m", "pip", "install", "pycryptodome", "protobuf", "protobuf-decoder", "requests"], cwd=folder)
+    
+    # Direct Process Execution
+    proc = subprocess.Popen([sys.executable, "ckr.py"], cwd=folder, stdout=log_file, stderr=log_file, start_new_session=True)
+    running_processes[bot] = proc
     return redirect(url_for("index"))
 
 @app.route("/stop/<bot>")
